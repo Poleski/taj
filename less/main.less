@@ -1,0 +1,120 @@
+@c-font: #333;
+@c-background: #f0f0f0;
+
+@c-red: #f00;
+@c-blue: #00f;
+@c-neutral: #f9f9b6;
+@c-killer: @c-font;
+
+
+body {
+    overflow: hidden;
+    font-family: 'Open Sans', Verdana, sans-serif;
+    color: @c-font;
+    background-color: @c-background;
+}
+
+#board {
+    display: flex;
+    flex-wrap: wrap;
+    width: 800px;
+    height: 800px;
+    margin: 0 auto;
+
+    .board-item {
+        flex-basis: 20%;
+
+        div {
+            position: relative;
+            border: 1px solid black;
+            border-radius: 10px;
+            width: 90%;
+            height: 0;
+            padding-bottom: 90%;
+            cursor: pointer
+        }
+
+        &.active {
+            div {
+                background-color: green;
+                color: @c-background;
+            }
+        }
+
+        &.blue {
+            div {
+                background-color: @c-blue;
+                color: @c-background;
+            }
+        }
+
+        &.red {
+            div {
+                background-color: @c-red;
+                color: @c-background;
+            }
+        }
+
+        &.killer {
+            div {
+                background-color: @c-killer;
+                color: @c-background;
+            }
+        }
+
+        &.neutral {
+            div {
+                background-color: @c-neutral;
+            }
+        }
+    }
+
+    span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        text-transform: uppercase;
+        text-align: center;
+        font-weight: bold;
+    }
+}
+
+#controls {
+    width: 800px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    bottom: -200px;
+    transition: all 200ms ease;
+
+    &.active {
+        bottom: 0;
+    }
+
+    > div {
+        width: 100px;
+        height: 100px;
+        display: inline-block;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 1px solid black;
+    }
+
+    #control-red {
+        background-color: @c-red;
+    }
+
+    #control-neutral {
+        background-color: @c-neutral;
+    }
+
+    #control-killer {
+        background-color: @c-killer;
+    }
+
+    #control-blue {
+        background-color: @c-blue;
+    }
+}
