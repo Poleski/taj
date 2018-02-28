@@ -30,7 +30,7 @@ $(document).ready(function() {
         typeArray = [];
 
         for (var k in boss.bossArray) {
-            if (k === 0) {
+            if (k == 0) {
                 typeArray.push("killer");
             } else if (k <= 7) {
                 typeArray.push("neutral")
