@@ -3,15 +3,150 @@
 
 @c-red: #f00;
 @c-blue: #00f;
+@c-select: #505;
 @c-neutral: #f9f9b6;
 @c-killer: @c-font;
 
+* {
+    box-sizing: border-box;
+}
 
 body {
-    overflow: hidden;
+    overflow-x: hidden;
     font-family: 'Open Sans', Verdana, sans-serif;
     color: @c-font;
     background-color: @c-background;
+}
+
+#gameform {
+    margin: 0 auto;
+    max-width: 480px;
+    width: 100%;
+
+    h1 {
+        text-align: center;
+    }
+
+    fieldset {
+        border: 0;
+        position: relative;
+        padding: 1em 0 0;
+        margin: 0;
+    }
+
+    .form-container {
+        display: none;
+
+        &.active {
+            display: initial;
+        }
+
+        .seed_gen {
+            color: inherit;
+            position: absolute;
+            right: 0;
+            bottom: 1px;
+            border-radius: 0 5px 5px 0;
+            padding: 0.375em;
+            font-size: 1.5em;
+            transition: all 200ms ease;
+
+            &:hover {
+                background-color: @c-select;
+                color: white;
+            }
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            border: 1px solid @c-select;
+            text-align: center;
+            border-radius: 5px;
+            padding: 0.375em;
+            font-size: 1.5em;
+            background-color: transparent;
+        }
+
+        input[type="submit"] {
+            padding: 0.375em;
+            border-radius: 5px;
+            border: 1px solid @c-select;
+            background-color: @c-select;
+            color: white;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            transition: all 200ms ease;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1em;
+
+            &:hover {
+                background-color: transparent;
+                color: @c-font;
+            }
+        }
+
+        .set,
+        .seed,
+        .load {
+            label {
+                display: block;
+                text-align: center;
+                padding-bottom: 0.75em;
+                font-weight: bold;
+                font-size: 1.5em;
+            }
+        }
+    }
+
+    .toggle {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        > label {
+            flex: 0 1 50%;
+            text-align: center;
+            font-weight: bold;
+
+            input {
+                display: none;
+            }
+
+            span {
+                background-color: transparent;
+                display: inline-block;
+                width: 100%;
+                border: 1px solid @c-select;
+                transition: all 200ms ease;
+                padding: 1em;
+                cursor: pointer;
+            }
+
+            input:checked + span {
+                background-color: @c-select;
+                color: white;
+            }
+
+            &:first-child {
+                span {
+                    border-radius: 5px 0 0 5px;
+                    border-right: 0;
+                }
+
+            }
+
+            &:last-child {
+                span {
+                    border-radius: 0 5px 5px 0;
+                }
+            }
+        }
+    }
+
+
 }
 
 #board {
@@ -36,7 +171,7 @@ body {
 
         &.active {
             div {
-                background-color: green;
+                background-color: fade(@c-select, 50%);
                 color: @c-background;
             }
         }

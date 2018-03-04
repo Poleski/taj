@@ -1,0 +1,112 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Tajniacy v0.1</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://use.fontawesome.com/releases/v5.0.6/css/fontawesome.css" rel="stylesheet">
+        <link href="https://use.fontawesome.com/releases/v5.0.6/css/solid.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,700" rel="stylesheet">
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.min.css">
+        <script src="js/vendor/ss.js"></script>
+    </head>
+    <body>
+        <section id="content">
+            <section id="gameform">
+                <h1>Tajniacy</h1>
+                <fieldset class="new_load toggle">
+                    <label for="new">
+                        <input type="radio" name="new_load" id="new" value="new-game" checked />
+                        <span>Nowa gra</span>
+                    </label>
+                    <label for="load">
+                        <input type="radio" name="new_load" id="load" value="load-game" />
+                        <span>Wczytaj grę</span>
+                    </label>
+                </fieldset>
+                <div class="form-container new-game active">
+                    <form id="new-game" action="index.html">
+                        <fieldset class="seed">
+                            <label for="seed">Gra</label>
+                            <input type="text" name="seed" id="seed" />
+                            <a href="#" class="seed_gen"><i class="fas fa-sync"></i></a>
+                        </fieldset>
+                        <fieldset class="set">
+                            <label for="set">Zestaw wyrazów</label>
+                            <select name="set" id="set">
+                                <option value="s">Standardowy</option>
+                            </select>
+                        </fieldset>
+                        <fieldset class="mode toggle">
+                            <label for="auto">
+                                <input type="radio" name="mode" id="auto" value="a" checked />
+                                <span>Tryb auto</span>
+                            </label>
+                            <label for="manual">
+                                <input type="radio" name="mode" id="manual" value="m" disabled />
+                                <span>Tryb ręczny</span>
+                            </label>
+                        </fieldset>
+                    </form>
+                    <fieldset class="player toggle">
+                        <label for="normal">
+                            <input type="radio" name="player" id="normal" value="index.html" checked />
+                            <span>Tajniak</span>
+                        </label>
+                        <label for="boss">
+                            <input type="radio" name="player" id="boss" value="boss.html" />
+                            <span>Szef</span>
+                        </label>
+                    </fieldset>
+                    <input type="submit" value="Rozpocznij grę" form="new-game" />
+                </div>
+                <div class="form-container load-game">
+                    <form id="load-game" action="index.html">
+                        <fieldset class="load">
+                            <label for="load">Gra</label>
+                            <select name="load">
+                                <option value="">Brak rozpoczętych gier</option>
+                            </select>
+                        </fieldset>
+                        <fieldset class="set">
+                            <label for="load-set">Zestaw wyrazów</label>
+                            <select name="set" id="load-set" disabled>
+                                <option value="" disabled>Standardowe</option>
+                            </select>
+                        </fieldset>
+                        <fieldset class="mode toggle">
+                            <label for="load-auto">
+                                <span>Tryb auto</span>
+                                <input type="radio" name="load-mode" id="load-auto" value="auto" disabled />
+                            </label>
+                            <label for="load-manual">
+                                <span>Tryb ręczny</span>
+                                <input type="radio" name="load-mode" id="load-manual" value="manual" disabled />
+                            </label>
+                        </fieldset>
+                    </form>
+                    <fieldset class="player toggle">
+                        <label for="load-normal">
+                            <span>Tajniak</span>
+                            <input type="radio" name="load-player" id="load-normal" value="index.html" checked />
+                        </label>
+                        <label for="load-boss">
+                            <span>Szef</span>
+                            <input type="radio" name="load-player" id="load-boss" value="boss.html" />
+                        </label>
+                    </fieldset>
+                    <input type="submit" value="Rozpocznij grę" form="load-game" disabled />
+                </div>
+            </section>
+        </section>
+        <script src="js/vendor/modernizr-3.5.0.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.2.1.min.js"><\/script>')</script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/2.4.3/seedrandom.min.js"></script>
+
+        <script src="js/start.js"></script>
+    </body>
+</html>
