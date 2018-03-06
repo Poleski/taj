@@ -56,6 +56,12 @@ body {
     }
 }
 
+#game {
+    #content {
+        display: flex;
+    }
+}
+
 #gameform {
     margin: 0 auto;
     max-width: 480px;
@@ -185,6 +191,33 @@ body {
     }
 
 
+}
+
+#scores {
+    flex: 0 0 30%;
+    display: flex;
+
+    .scores {
+        text-align: center;
+        flex: 1 1;
+
+        .scores-num {
+            font-size: 6em;
+            font-weight: bold;
+        }
+    }
+
+    .scores-blue {
+        .scores-num {
+            color: @c-blue;
+        }
+    }
+
+    .scores-red {
+        .scores-num {
+            color: @c-red;
+        }
+    }
 }
 
 #board {

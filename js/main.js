@@ -1,6 +1,6 @@
 var wordArray = ["żelazo","płot","kiwi","kaptur","stopień","czas","czapa","egipt","grzmot","kamień","niebo","wojna","dno","anglia","sznur","krzesło","szafa","holender","meksyk","napad","tokio","zmywacz","szmugiel","golf","oliwa","koń","połączenie","siekacz","ameryka","lina","drzewo","gołąb","blok","rzut","policja","samochód","karawan","kręgi","żabka","rama","szczęście","poczta","piramida","pole","soczewka","masa","diament","ława","prawnik","pociąg","robak","podkład","mamut","zieleń","tusz","korzenie","chiny","limuzyna","maks","europa","choroba","butelka","igła","czujka","spadek","gotyk","but","zwoje","wiatr","pasta","łożysko","fartuch","czekolada","plastik","helikopter","gładki","królowa","złodziej","laser","aztek","samolot","geniusz","żołnierz","ząb","szpieg","noc","ciało","woda","niedźwiedź","muszla","sieć","strumień","księżyc","ręka","pojazd","belka","król","truteń","nektar","ziemia","polska","dzięcioł","gaz","ogon","awaria","gigant","usta","kciuk","pochodnia","flet","nora","bal","waszyngton","serce","kość","zmiana","trucizna","model","paleta","bermudy","chochlik","figura","wiosna","lew","kontrakt","klawisz","niemcy","gwiazda","splot","miedź","wydech","dzwon","wachlarz","zebra","donice","ośmiornica","lody","grecja","orzech","ambulans","ślimak","łuk","strzał","guzik","mysz","pazur","doktor","komórka","plaża","wkład","karta","róg","róża","rzym","pierścień","taniec","marchew","wiedźma","śmierć","szekspir","pupil","mucha","jowisz","koncert","hollywood","praca","klamka","żuraw","grzyb","podkowa","promień","moskwa","kasyno","rewolucja","strona","plik","opoka","talia","trąba","skorpion","dinozaur","żuk","kalosz","obsada","anioł","funt","znak","ambasada","grabarz","film","francuz","pekin","ryba","świnia","olimp","prawo","pingwin","stadion","ekran","rękawica","cebula","gniazdko","pistolet","hak","dwór","kasa","humor","lakier","duch","pas","placek","kostium","feniks","szpital","torebka","nóż","widelec","kangur","wieżowiec","maj","nowy jork","kozioł","australia","hotel","dzień","pokrywka","dywan","olej","żebro","most","stan","nurek","organy","merkury","bicz","ruletka","rura","bomba","żubr","statek","śnieg","szpilka","czar","perła","las","loch ness","góra","zespół","oko","życie","pająk","obcy","pudło","twarz","łódź","wieża","pilot","trawa","pielęgniarka","afryka","rekin","pustka","lot","tusza","wstęp","mur","papier","gnat","nauczyciel","mikroskop","smok","kucharz","ruda","satelita","szkocja","powietrze","pies","materiał","wieloryb","jagoda","talerz","skorupa","kolec","sukienka","linia","paluszki","lód","londyn","krzyż","orzeł","antarktyka","trójkąt","stopa","centaur","ucho","sztuka","złoto","zamek","waga","opera","atlantyda","kod","język","punkt","konar","nos","kropka","beczka","miód","kot","francja","korona","siano","teleskop","pan","babka","tchórz","krasnal","krówka","sokół","koło","pirat","ninja","rząd","przewodnik","dusza","jatka","jabłko","stół","północ","himalaje","stołek","superbohater","spadochron","bałwan","amazonka","dania","jednorożec","księżniczka","wąż","mistrz","berlin","nić","lis","port","dziura","siła","kaczor","rycerz","głowa","keczup","dziobak","milioner","królik","klucz","groszek","silnik","kret","bąk","słup","ogier","rzęsa","tablica","płyta","guma","jaja","teatr","bar","gra","toaleta","laska","kraków","rak","fala","bank","budowa","tuba","wybuch","szczyt","foka","kwadrat","gracja","świerszcz","klatka","rakieta","szkoła","naukowiec","noga","centrum","kościół","pociecha","cień","basen","bawełna","szkło","robot","kontakt","ogień","saturn"];
 
-var newGame, loadGame, saveGame, clearGame, pickItem, newBossArray, debug, init, gameObject, doMove;
+var newGame, loadGame, saveGame, clearGame, pickItem, newBossArray, debug, init, gameObject, doMove, updateScores, updateWordList, changeTeam;
 
 $(document).ready(function() {
 
@@ -20,6 +20,7 @@ $(document).ready(function() {
     var boardItems = board.children(".board-item");
     var scoreBoard = $("#scores");
     var activeColor = "";
+    var scores = {"red": 8, "blue": 8};
 
     newBossArray = function(seed) {
         var boss = {};
@@ -77,24 +78,45 @@ $(document).ready(function() {
     doMove = function(color, field) {
         var fieldNode = boardItems.filter("[data-item-id='"+field+"']");
         var correctColor = gameObject.boss.typeArray[gameObject.boss.bossArray.indexOf(field)];
+        var word = gameObject.agents[field];
+        var otherColor = (activeColor == "blue") ? "red" : "blue";
+
         fieldNode.addClass(correctColor);
 
+        updateWordList(activeColor, correctColor, word);
+
         if (correctColor == activeColor) {
-            // add score
+            scores[activeColor]--;
         } else if (correctColor == 'killer') {
             // end game
-        } else if (correcColor == 'neutral') {
-            // change active
+        } else if (correctColor == 'neutral') {
+            changeTeam();
         } else {
-            // add score to other team
-            // change active
+            scores[otherColor]--;
+            changeTeam();
         }
 
-    }
+        updateScores();
+    };
 
-    var Modal = function(instance, callback) {
+    updateWordList = function(team, color, word) {
+        var listItem = "<li class='"+color+"'>"+word+"</li>";
+        $(".scores-"+team+" .word-list").append(listItem);
+    };
+
+    updateScores = function() {
+        $(".scores-red .scores-num").html(scores.red);
+        $(".scores-blue .scores-num").html(scores.blue);
+    };
+
+    changeTeam = function() {
+        activeColor = (activeColor == "blue") ? "red" : "blue";
+        $("#team-toggle").prop("checked", (activeColor == "blue"));
+    };
+
+    var Modal = function(instance,task) {
         this.instance = instance;
-        this.callback = callback;
+        this.task = task;
         this.modalOpen = function() {
             instance.fadeIn();
         };
@@ -104,21 +126,21 @@ $(document).ready(function() {
 
         var self = this;
 
-        instance.find(".modal-close").click(function(e){
+        instance.find(".modal-close").off("click").click(function(e){
             e.preventDefault();
             self.modalClose();
         });
-        instance.find("a.button").click(function(e){
+        instance.find("a.button").off("click").click(function(e){
             e.preventDefault();
             self.modalClose();
-            self.callback();
-        })
-        instance.find(".modal-content").click(function(e) {
+            self.task();
+        });
+        instance.find(".modal-content").off("click").click(function(e) {
             e.stopPropagation();
-        })
+        });
 
         instance.click(this.modalClose);
-    }
+    };
 
     init = function(seed, words, mode) {
         var saveId = seed + words + mode;
@@ -131,9 +153,9 @@ $(document).ready(function() {
         gameObject.boss = newBossArray(seed);
 
         activeColor = gameObject.boss.start;
-
-        $(".scores-num",scoreBoard).html(8);
-        $(".scores-"+activeColor+" .scores-num", scoreBoard).html(9)
+        changeTeam();
+        scores[activeColor] = 9;
+        updateScores();
 
         if (saveFile) {
             for(var i in saveFile) {
@@ -158,8 +180,7 @@ $(document).ready(function() {
             doMove(activeColor, field);
         });
         moveModal.modalOpen();
-        console.log(doMove);
-    })
+    });
 
 
 
@@ -168,16 +189,8 @@ $(document).ready(function() {
     /* SHIT CODE */
 
     debug = function() {
-        console.log(boss);
+        console.log(Modal);
 
-        boardItems.each(function() {
-            $(this).removeClass("active blue red neutral killer");
-
-            var currentId = $(this).data("item-id");
-            var bossArrayIndex = boss.bossArray.indexOf(currentId);
-
-            $(this).addClass(boss.typeArray[bossArrayIndex]);
-        })
     };
 
     saveGame = function() {
@@ -230,17 +243,6 @@ $(document).ready(function() {
         controlPanel.removeClass("active");
     };
 
-    /*boardItems.click(function() {
-        if (!$(this).hasClass("active")) {
-            boardItems.filter(".active").removeClass("active");
-            $(this).addClass("active");
-            controlPanel.addClass("active");
-        } else {
-            $(this).removeClass("active");
-            controlPanel.removeClass("active");
-        }
-    });
-*/
     controls.click(function() {
         if (controlPanel.hasClass("active")) {
             var activeItem = boardItems.filter(".active");
@@ -250,4 +252,4 @@ $(document).ready(function() {
             saveGame();
         }
     });
-})
+});

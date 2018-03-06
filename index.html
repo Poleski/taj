@@ -12,18 +12,22 @@
         <link rel="stylesheet" href="css/main.min.css">
 
     </head>
-    <body>
+    <body id="game">
+        <header>
+            <label for="team-toggle">
+                <input type="checkbox" id="team-toggle" name="active-team" value="blue" />
+                <span></span>
+            </label>
+        </header>
         <section id="content">
             <section id="scores">
-                <div class="scores-red">
-                    <h3>Czerwoni</h3>
+                <div class="scores-red scores">
                     <div class="scores-num"></div>
-                    <div class="word-list"></div>
+                    <ul class="word-list"></ul>
                 </div>
-                <div class="scores-blue">
-                    <h3>Niebiescy</h3>
+                <div class="scores-blue scores">
                     <div class="scores-num"></div>
-                    <div class="word-list"></div>
+                    <ul class="word-list"></ul>
                 </div>
             </section>
             <section id="board">
