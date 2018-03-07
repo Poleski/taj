@@ -2,6 +2,10 @@ var wordArray = ["żelazo","płot","kiwi","kaptur","stopień","czas","czapa","eg
 
 var newGame, loadGame, saveGame, clearGame, pickItem, newBossArray, debug, init, gameObject, doMove, updateScores, updateWordList, changeTeam;
 
+var dupa = function() {
+    console.log('dupa')
+};
+
 $(document).ready(function() {
 
     var url = new URL(window.location.href);
@@ -15,6 +19,7 @@ $(document).ready(function() {
     var mode = url.searchParams.get("mode");
 
     var board = $("#board");
+    var teamToggle = $("#team-toggle");
     var controlPanel = $("#controls");
     var controls = controlPanel.children("div");
     var boardItems = board.children(".board-item");
@@ -81,7 +86,7 @@ $(document).ready(function() {
         var word = gameObject.agents[field];
         var otherColor = (activeColor == "blue") ? "red" : "blue";
 
-        fieldNode.addClass(correctColor);
+        fieldNode.addClass(correctColor).off("click");
 
         updateWordList(activeColor, correctColor, word);
 
@@ -111,7 +116,7 @@ $(document).ready(function() {
 
     changeTeam = function() {
         activeColor = (activeColor == "blue") ? "red" : "blue";
-        $("#team-toggle").prop("checked", (activeColor == "blue"));
+        teamToggle.prop("checked", (activeColor == "blue"));
     };
 
     var Modal = function(instance,task) {
@@ -132,6 +137,7 @@ $(document).ready(function() {
         });
         instance.find("a.button").off("click").click(function(e){
             e.preventDefault();
+            $(this).off("click");
             self.modalClose();
             self.task();
         });
@@ -139,7 +145,7 @@ $(document).ready(function() {
             e.stopPropagation();
         });
 
-        instance.click(this.modalClose);
+        instance.off("click").click(this.modalClose);
     };
 
     init = function(seed, words, mode) {
@@ -170,10 +176,6 @@ $(document).ready(function() {
 
     init(seed, words, mode);
 
-    var dupa = function() {
-        console.log('dupa')
-    };
-
     boardItems.click(function() {
         var field = $(this).data("item-id");
         var moveModal = new Modal($("#move-modal"), function() {
@@ -182,7 +184,10 @@ $(document).ready(function() {
         moveModal.modalOpen();
     });
 
-
+    teamToggle.change(function(e) {
+        e.preventDefault();
+        changeTeam();
+    });
 
 
 

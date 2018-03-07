@@ -1,21 +1,23 @@
 @c-font: #333;
+@c-background-main: #ccc;
 @c-background: #f0f0f0;
 
-@c-red: #f00;
-@c-blue: #00f;
+@c-red: #c00;
+@c-blue: #00c;
 @c-select: #505;
 @c-neutral: #f9f9b6;
 @c-killer: @c-font;
 
 * {
     box-sizing: border-box;
+    user-select: none;
 }
 
 body {
     overflow-x: hidden;
     font-family: 'Open Sans', Verdana, sans-serif;
     color: @c-font;
-    background-color: @c-background;
+    background-color: @c-background-main;
 }
 
 .modal {
@@ -57,6 +59,10 @@ body {
 }
 
 #game {
+    header {
+
+    }
+
     #content {
         display: flex;
     }
@@ -109,7 +115,11 @@ body {
             border-radius: 5px;
             padding: 0.375em;
             font-size: 1.5em;
-            background-color: transparent;
+            background-color: @c-background;
+
+            &:disabled {
+                background-color: @c-background-main;
+            }
         }
 
         input[type="submit"] {
@@ -127,7 +137,7 @@ body {
             margin-top: 1em;
 
             &:hover {
-                background-color: transparent;
+                background-color: @c-background;
                 color: @c-font;
             }
         }
@@ -160,7 +170,7 @@ body {
             }
 
             span {
-                background-color: transparent;
+                background-color: @c-background;
                 display: inline-block;
                 width: 100%;
                 border: 1px solid @c-select;
@@ -172,6 +182,10 @@ body {
             input:checked + span {
                 background-color: @c-select;
                 color: white;
+            }
+
+            input:disabled + span {
+                background-color: @c-background-main;
             }
 
             &:first-child {
@@ -195,15 +209,89 @@ body {
 
 #scores {
     flex: 0 0 30%;
-    display: flex;
+
+    #team-toggle-container {
+        width: 200px;
+        margin: 40px auto 0;
+
+        label {
+            input {
+                display: none;
+            }
+
+            span {
+                display: inline-block;
+                width: 100%;
+                padding: 1em;
+                border-radius: 32px;
+                height: 64px;
+                background-color: @c-red;
+                position: relative;
+                transition: all 200ms ease;
+                border: 2px solid @c-red;
+                cursor: pointer;
+
+                &:after {
+                    content: '';
+                    position: absolute;
+                    height: 60px;
+                    width: 60px;
+                    border-radius: 50%;
+                    top: 0;
+                    left: 0;
+                    background-color: white;
+                    transition: all 200ms ease;
+                    box-sizing: content-box;
+                }
+
+            }
+
+            input:checked + span {
+                background-color: @c-blue;
+                border-color: @c-blue;
+
+                &:after {
+                    top: 0;
+                    left: 136px;
+                }
+            }
+        }
+    }
 
     .scores {
         text-align: center;
-        flex: 1 1;
+        width: 50%;
+        float: left;
 
         .scores-num {
             font-size: 6em;
             font-weight: bold;
+        }
+
+        .word-list {
+            list-style-type: none;
+            padding: 0;
+
+            li {
+                font-weight: bold;
+                text-transform: uppercase;
+
+                &.blue {
+                    color: @c-blue;
+                }
+
+                &.red {
+                    color: @c-red;
+                }
+
+                &.neutral {
+                    color: @c-neutral;
+                }
+
+                &.killer {
+                    color: @c-killer;
+                }
+            }
         }
     }
 
@@ -237,7 +325,8 @@ body {
             width: 90%;
             height: 0;
             padding-bottom: 90%;
-            cursor: pointer
+            cursor: pointer;
+            background-color: @c-background;
         }
 
         &.active {
@@ -251,6 +340,7 @@ body {
             div {
                 background-color: @c-blue;
                 color: @c-background;
+                cursor: default;
             }
         }
 
@@ -258,6 +348,7 @@ body {
             div {
                 background-color: @c-red;
                 color: @c-background;
+                cursor: default;
             }
         }
 
@@ -265,12 +356,14 @@ body {
             div {
                 background-color: @c-killer;
                 color: @c-background;
+                cursor: default;
             }
         }
 
         &.neutral {
             div {
                 background-color: @c-neutral;
+                cursor: default;
             }
         }
     }

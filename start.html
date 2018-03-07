@@ -67,8 +67,8 @@
                     <form id="load-game" action="index.html">
                         <fieldset class="load">
                             <label for="load">Gra</label>
-                            <select name="load">
-                                <option value="">Brak rozpoczętych gier</option>
+                            <select name="load" disabled>
+                                <option value="" disabled>Brak rozpoczętych gier</option>
                             </select>
                         </fieldset>
                         <fieldset class="set">
@@ -79,23 +79,23 @@
                         </fieldset>
                         <fieldset class="mode toggle">
                             <label for="load-auto">
-                                <span>Tryb auto</span>
                                 <input type="radio" name="load-mode" id="load-auto" value="auto" disabled />
+                                <span>Tryb auto</span>
                             </label>
                             <label for="load-manual">
-                                <span>Tryb ręczny</span>
                                 <input type="radio" name="load-mode" id="load-manual" value="manual" disabled />
+                                <span>Tryb ręczny</span>
                             </label>
                         </fieldset>
                     </form>
                     <fieldset class="player toggle">
                         <label for="load-normal">
-                            <span>Tajniak</span>
                             <input type="radio" name="load-player" id="load-normal" value="index.html" checked />
+                            <span>Tajniak</span>
                         </label>
                         <label for="load-boss">
-                            <span>Szef</span>
                             <input type="radio" name="load-player" id="load-boss" value="boss.html" />
+                            <span>Szef</span>
                         </label>
                     </fieldset>
                     <input type="submit" value="Rozpocznij grę" form="load-game" disabled />

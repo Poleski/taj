@@ -32,6 +32,8 @@ $(document).ready(function() {
         $(this).parents(".form-container").find('form').attr("action", $(this).val());
     });
 
+
+
     $("#new-game").submit(function(e) {
         e.preventDefault();
         var gameCode = seedInput.val() + $(this).find("#set").val() + $(this).find(".mode input:checked").val();
