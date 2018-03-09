@@ -23,6 +23,7 @@
                         <input type="checkbox" id="team-toggle" name="active-team" value="blue" />
                         <span></span>
                     </label>
+                    <h3>Koniec gry!</h3>
                 </div>
                 <div class="scores-red scores">
                     <div class="scores-num"></div>
@@ -65,10 +66,18 @@
 
             <section id="move-modal" class="modal">
                 <div class="modal-content">
-                    <div class="modal-close">XX</div>
-                    <h3>Nagłówek</h3>
-                    <p>Lorem ipsum</p>
-                    <a class="button">Potwierdzam!</a>
+                    <div class="modal-close">x</div>
+                    <h3>Na pewno?</h3>
+                    <p>Czy jesteście pewni, że Wasz agent kryje się pod polem <span class="word"></span>?</p>
+                    <a class="button">Tak!</a>
+                </div>
+            </section>
+
+            <section id="end-modal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-close">x</div>
+                    <h3>Koniec gry!</h3>
+                    <p><span class="team"></span> wygrywają, ponieważ <span class="reason"></span></p>
                 </div>
             </section>
         </section>
