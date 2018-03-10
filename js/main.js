@@ -1,10 +1,7 @@
 var wordArray = ["żelazo","płot","kiwi","kaptur","stopień","czas","czapa","egipt","grzmot","kamień","niebo","wojna","dno","anglia","sznur","krzesło","szafa","holender","meksyk","napad","tokio","zmywacz","szmugiel","golf","oliwa","koń","połączenie","siekacz","ameryka","lina","drzewo","gołąb","blok","rzut","policja","samochód","karawan","kręgi","żabka","rama","szczęście","poczta","piramida","pole","soczewka","masa","diament","ława","prawnik","pociąg","robak","podkład","mamut","zieleń","tusz","korzenie","chiny","limuzyna","maks","europa","choroba","butelka","igła","czujka","spadek","gotyk","but","zwoje","wiatr","pasta","łożysko","fartuch","czekolada","plastik","helikopter","gładki","królowa","złodziej","laser","aztek","samolot","geniusz","żołnierz","ząb","szpieg","noc","ciało","woda","niedźwiedź","muszla","sieć","strumień","księżyc","ręka","pojazd","belka","król","truteń","nektar","ziemia","polska","dzięcioł","gaz","ogon","awaria","gigant","usta","kciuk","pochodnia","flet","nora","bal","waszyngton","serce","kość","zmiana","trucizna","model","paleta","bermudy","chochlik","figura","wiosna","lew","kontrakt","klawisz","niemcy","gwiazda","splot","miedź","wydech","dzwon","wachlarz","zebra","donice","ośmiornica","lody","grecja","orzech","ambulans","ślimak","łuk","strzał","guzik","mysz","pazur","doktor","komórka","plaża","wkład","karta","róg","róża","rzym","pierścień","taniec","marchew","wiedźma","śmierć","szekspir","pupil","mucha","jowisz","koncert","hollywood","praca","klamka","żuraw","grzyb","podkowa","promień","moskwa","kasyno","rewolucja","strona","plik","opoka","talia","trąba","skorpion","dinozaur","żuk","kalosz","obsada","anioł","funt","znak","ambasada","grabarz","film","francuz","pekin","ryba","świnia","olimp","prawo","pingwin","stadion","ekran","rękawica","cebula","gniazdko","pistolet","hak","dwór","kasa","humor","lakier","duch","pas","placek","kostium","feniks","szpital","torebka","nóż","widelec","kangur","wieżowiec","maj","nowy jork","kozioł","australia","hotel","dzień","pokrywka","dywan","olej","żebro","most","stan","nurek","organy","merkury","bicz","ruletka","rura","bomba","żubr","statek","śnieg","szpilka","czar","perła","las","loch ness","góra","zespół","oko","życie","pająk","obcy","pudło","twarz","łódź","wieża","pilot","trawa","pielęgniarka","afryka","rekin","pustka","lot","tusza","wstęp","mur","papier","gnat","nauczyciel","mikroskop","smok","kucharz","ruda","satelita","szkocja","powietrze","pies","materiał","wieloryb","jagoda","talerz","skorupa","kolec","sukienka","linia","paluszki","lód","londyn","krzyż","orzeł","antarktyka","trójkąt","stopa","centaur","ucho","sztuka","złoto","zamek","waga","opera","atlantyda","kod","język","punkt","konar","nos","kropka","beczka","miód","kot","francja","korona","siano","teleskop","pan","babka","tchórz","krasnal","krówka","sokół","koło","pirat","ninja","rząd","przewodnik","dusza","jatka","jabłko","stół","północ","himalaje","stołek","superbohater","spadochron","bałwan","amazonka","dania","jednorożec","księżniczka","wąż","mistrz","berlin","nić","lis","port","dziura","siła","kaczor","rycerz","głowa","keczup","dziobak","milioner","królik","klucz","groszek","silnik","kret","bąk","słup","ogier","rzęsa","tablica","płyta","guma","jaja","teatr","bar","gra","toaleta","laska","kraków","rak","fala","bank","budowa","tuba","wybuch","szczyt","foka","kwadrat","gracja","świerszcz","klatka","rakieta","szkoła","naukowiec","noga","centrum","kościół","pociecha","cień","basen","bawełna","szkło","robot","kontakt","ogień","saturn"];
 
-var newGame, loadGame, saveGame, clearGame, pickItem, newBossArray, debug, init, gameObject, doMove, updateScores, updateWordList, changeTeam, endGame;
+var newGame, loadGame, saveGame, clearGame, newBossArray, bossListBuild, init, gameObject, doMove, updateScores, updateWordList, changeTeam, endGame;
 
-var dupa = function() {
-    console.log('dupa')
-};
 
 $(document).ready(function() {
 
@@ -17,12 +14,12 @@ $(document).ready(function() {
 
     var words = url.searchParams.get("set");
     var mode = url.searchParams.get("mode");
+    var bossBool = ($("body").hasClass("boss-screen"));
     var saveId,saveFile;
 
     var board = $("#board");
+    var bossBoard = $("#boss-board");
     var teamToggle = $("#team-toggle");
-    var controlPanel = $("#controls");
-    var controls = controlPanel.children("div");
     var boardItems = board.children(".board-item");
     var activeColor = "";
     var scores = {"red": 8, "blue": 8};
@@ -56,6 +53,10 @@ $(document).ready(function() {
         instance.off("click").click(this.modalClose);
     };
 
+    bossListBuild = function(word, type) {
+        bossBoard.find(".word-container."+type).append("<li class='boss-word "+type+"' data-word='"+word+"' data-color='"+type+"'>"+word+"</li>");
+    };
+
     newBossArray = function(seed) {
         var boss = {};
         boss.start = Math.floor(Math.random()*2) ? "red" : "blue";
@@ -66,18 +67,39 @@ $(document).ready(function() {
         typeArray = [];
 
         for (var k in boss.bossArray) {
+            var word = gameObject.agents[boss.bossArray[k]];
+
             if (k == 0) {
                 typeArray.push("killer");
+                bossListBuild(word, "killer");
             } else if (k <= 7) {
                 typeArray.push("neutral");
+                bossListBuild(word, "neutral");
             } else if (k <= 15) {
                 typeArray.push("red");
+                bossListBuild(word, "red");
             } else if (k <= 23) {
                 typeArray.push("blue");
+                bossListBuild(word, "blue");
             } else {
                 typeArray.push(boss.start);
+                bossListBuild(word, boss.start);
             }
         }
+
+        bossBoard.find(".boss-word").click(function() {
+            $(this).toggleClass("found");
+
+            if ($(this).hasClass("blue") || $(this).hasClass("red"))  {
+                if ($(this).hasClass("found")) {
+                    scores[$(this).data("color")]--;
+
+                } else {
+                    scores[$(this).data("color")]++;
+                }
+                updateScores();
+            }
+        });
 
         boss.typeArray = typeArray;
 
@@ -197,7 +219,6 @@ $(document).ready(function() {
     init = function(seed, words, mode) {
         saveId = seed + words + mode;
         saveFile = eval(localStorage.getItem("game-"+saveId));
-        //var saveFile = [["red", 0], ["red", 2], ["red", 4], ["red", 5], ["red", 6], ["red", 13], ["red", 19]];
 
         gameObject = {};
 
@@ -209,7 +230,7 @@ $(document).ready(function() {
         scores[activeColor] = 9;
         updateScores();
 
-        if (saveFile) {
+        if (saveFile && !bossBool) {
             loadGame();
         } else {
             saveFile = [];
@@ -234,26 +255,10 @@ $(document).ready(function() {
         changeTeam();
     });
 
-
     /* SHIT CODE */
-
-    debug = function() {
-        console.log(Modal);
-
-    };
 
     clearGame = function() {
         localStorage.removeItem(seed);
         boardItems.removeClass("active blue red neutral killer");
     };
-
-    controls.click(function() {
-        if (controlPanel.hasClass("active")) {
-            var activeItem = boardItems.filter(".active");
-            var type = $(this).data("id");
-
-            pickItem(activeItem, type);
-            saveGame();
-        }
-    });
 });

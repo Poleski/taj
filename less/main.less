@@ -8,6 +8,19 @@
 @c-neutral: #f9f9b6;
 @c-killer: @c-font;
 
+// Media queries
+
+@m-mobile-s: 480px;
+@m-mobile: 768px;
+@m-tablet: 1024px;
+@m-desktop: 1280px;
+
+@mobile-s: ~'only screen and (max-width: 479px)';
+@mobile: ~'only screen and (max-width: 767px)';
+@tablet: ~'only screen and (min-width: 768px)';
+@desktop: ~'only screen and (min-width: 1024px)';
+@desktop-l: ~'only screen and (min-width: 1280px)';
+
 * {
     box-sizing: border-box;
     user-select: none;
@@ -32,12 +45,13 @@ body {
     .modal-content {
         position: absolute;
         width: 50%;
-        height: 50%;
         top: 50%;
         left: 50%;
         transform: translate(-50%,-50%);
         background-color: white;
         border-radius: 5px;
+        text-align: center;
+        padding: 1em;
 
         .modal-close {
             position: absolute;
@@ -56,6 +70,58 @@ body {
                 color: @c-killer;
             }
         }
+
+        h3 {
+            margin-top: 0;
+        }
+
+        a {
+            display: inline-block;
+            color: white;
+            background-color: @c-select;
+            padding: 0.5em 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            border: 2px solid @c-select;
+            transition: all 200ms ease;
+
+            &:hover,
+            &:focus {
+                background-color: white;
+                color: @c-select;
+            }
+        }
+    }
+}
+
+.word-list {
+    list-style-type: none;
+    padding: 0;
+
+    li {
+        font-weight: bold;
+        text-transform: uppercase;
+
+        &.blue {
+            color: @c-blue;
+        }
+
+        &.red {
+            color: @c-red;
+        }
+
+        &.neutral {
+            color: @c-neutral;
+        }
+
+        &.killer {
+            color: @c-killer;
+        }
+
+        &.found {
+            color: @c-background;
+            text-decoration: line-through;
+        }
     }
 }
 
@@ -66,6 +132,10 @@ body {
 
     #content {
         display: flex;
+
+        @media @mobile {
+            flex-wrap: wrap;
+        }
     }
 }
 
@@ -73,6 +143,7 @@ body {
     margin: 0 auto;
     max-width: 480px;
     width: 100%;
+    padding: 0.5em;
 
     h1 {
         text-align: center;
@@ -157,12 +228,10 @@ body {
     }
 
     .toggle {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-
+        width: 100%;
         > label {
-            flex: 0 1 50%;
+            float: left;
+            width: 50%;
             text-align: center;
             font-weight: bold;
 
@@ -210,6 +279,11 @@ body {
 
 #scores {
     flex: 0 0 30%;
+
+    @media @mobile {
+        flex: 0 0 100%;
+        order: 2;
+    }
 
     #team-toggle-container {
         width: 200px;
@@ -275,32 +349,6 @@ body {
             font-size: 6em;
             font-weight: bold;
         }
-
-        .word-list {
-            list-style-type: none;
-            padding: 0;
-
-            li {
-                font-weight: bold;
-                text-transform: uppercase;
-
-                &.blue {
-                    color: @c-blue;
-                }
-
-                &.red {
-                    color: @c-red;
-                }
-
-                &.neutral {
-                    color: @c-neutral;
-                }
-
-                &.killer {
-                    color: @c-killer;
-                }
-            }
-        }
     }
 
     .scores-blue {
@@ -313,6 +361,10 @@ body {
         .scores-num {
             color: @c-red;
         }
+    }
+
+    &.boss-scores {
+        overflow: hidden;
     }
 }
 
@@ -387,41 +439,24 @@ body {
     }
 }
 
-#controls {
-    width: 800px;
-    margin: 0 auto;
+#boss-board {
     display: flex;
-    justify-content: space-between;
-    position: relative;
-    bottom: -200px;
-    transition: all 200ms ease;
+    flex-wrap: wrap;
 
-    &.active {
-        bottom: 0;
-    }
+    > .word-container {
+        flex: 0 1 50%;
+        text-align: center;
+        margin: 0 0 3em;
 
-    > div {
-        width: 100px;
-        height: 100px;
-        display: inline-block;
-        border-radius: 50%;
-        cursor: pointer;
-        border: 1px solid black;
-    }
+        &.neutral,
+        &.killer {
+            flex: 0 1 100%;
+        }
 
-    #control-red {
-        background-color: @c-red;
-    }
-
-    #control-neutral {
-        background-color: @c-neutral;
-    }
-
-    #control-killer {
-        background-color: @c-killer;
-    }
-
-    #control-blue {
-        background-color: @c-blue;
+        li {
+            font-size: 1.25em;
+            padding: 0.125em;
+            cursor: pointer;
+        }
     }
 }
