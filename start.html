@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="css/main.min.css">
         <script src="js/vendor/ss.js"></script>
     </head>
-    <body>
+    <body onunload="">
         <section id="content">
             <section id="gameform">
                 <h1>Tajniacy</h1>
@@ -28,7 +28,7 @@
                     </label>
                 </fieldset>
                 <div class="form-container new-game active">
-                    <form id="new-game" action="index.html">
+                    <form id="new-game" action="index.html" autocomplete="off">
                         <fieldset class="seed">
                             <label for="seed">Gra</label>
                             <input type="text" name="seed" id="seed" />
@@ -64,7 +64,7 @@
                     <input type="submit" value="Rozpocznij grę" form="new-game" />
                 </div>
                 <div class="form-container load-game">
-                    <form id="load-game" action="index.html">
+                    <form id="load-game" action="index.html" autocomplete="off" >
                         <fieldset class="load">
                             <label for="load">Gra</label>
                             <select name="load" disabled>

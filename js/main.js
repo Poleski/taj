@@ -53,8 +53,12 @@ $(document).ready(function() {
         instance.off("click").click(this.modalClose);
     };
 
-    bossListBuild = function(word, type) {
+    bossListBuild = function(word, type, index) {
         bossBoard.find(".word-container."+type).append("<li class='boss-word "+type+"' data-word='"+word+"' data-color='"+type+"'>"+word+"</li>");
+        if (bossBool) {
+            var field = boardItems.filter("[data-item-id='"+index+"']");
+            field.addClass(type);
+        }
     };
 
     newBossArray = function(seed) {
@@ -71,25 +75,25 @@ $(document).ready(function() {
 
             if (k == 0) {
                 typeArray.push("killer");
-                bossListBuild(word, "killer");
+                bossListBuild(word, "killer", boss.bossArray[k]);
             } else if (k <= 7) {
                 typeArray.push("neutral");
-                bossListBuild(word, "neutral");
+                bossListBuild(word, "neutral", boss.bossArray[k]);
             } else if (k <= 15) {
                 typeArray.push("red");
-                bossListBuild(word, "red");
+                bossListBuild(word, "red", boss.bossArray[k]);
             } else if (k <= 23) {
                 typeArray.push("blue");
-                bossListBuild(word, "blue");
+                bossListBuild(word, "blue", boss.bossArray[k]);
             } else {
                 typeArray.push(boss.start);
-                bossListBuild(word, boss.start);
+                bossListBuild(word, boss.start, boss.bossArray[k]);
             }
         }
 
         bossBoard.find(".boss-word").click(function() {
             $(this).toggleClass("found");
-
+            /*
             if ($(this).hasClass("blue") || $(this).hasClass("red"))  {
                 if ($(this).hasClass("found")) {
                     scores[$(this).data("color")]--;
@@ -98,6 +102,14 @@ $(document).ready(function() {
                     scores[$(this).data("color")]++;
                 }
                 updateScores();
+            }
+            */
+        });
+
+        bossBoard.find(".word-container").sortable({
+            stop: function(e, ui) {
+                ui.item.trigger("click");
+                console.log("stopped!");
             }
         });
 
@@ -213,7 +225,7 @@ $(document).ready(function() {
             var color = Object.keys(saveFile[i]);
             var field = saveFile[i][color];
             doMove(color, field);
-        };
+        }
     };
 
     init = function(seed, words, mode) {

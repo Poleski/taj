@@ -1,6 +1,6 @@
 $(document).ready(function() {
     var newLoad = $(".new_load");
-    var formContainers = $(".form-container");
+    var formContainer = $(".form-container");
     var newLoadInputs = $("input[type='radio']", newLoad);
     var seedInput = $(".seed input[type='text']");
     var playerToggle = $(".player input[type='radio']");
@@ -18,21 +18,37 @@ $(document).ready(function() {
 
     genSeed();
 
+    function resetFields() {
+        $("fieldset.toggle").each(function() {
+            $(this).find("input").first().prop("checked", true);
+        })
+    }
+
+    resetFields();
+
     $(".seed_gen").click(function(e) {
         e.preventDefault();
         genSeed();
     });
 
+    seedInput.focus(function() {
+        $(this).val('');
+    });
+
+    seedInput.blur(function() {
+        if ($(this).val() == "") {
+            genSeed();
+        }
+    });
+
     newLoadInputs.change(function() {
         var activeForm = $(this).val();
-        formContainers.removeClass("active").filter("." + activeForm).addClass("active");
+        formContainer.removeClass("active").filter("." + activeForm).addClass("active");
     });
 
     playerToggle.change(function() {
         $(this).parents(".form-container").find('form').attr("action", $(this).val());
     });
-
-
 
     $("#new-game").submit(function(e) {
         e.preventDefault();
@@ -49,6 +65,5 @@ $(document).ready(function() {
             $(this).off("submit").submit();
         }
     });
-
 
 });
