@@ -398,69 +398,95 @@ body {
     }
 }
 
-#board {
-    display: flex;
-    flex-wrap: wrap;
-    width: 800px;
-    height: 800px;
-    margin: 0 auto;
+#board-container {
+    flex: 0 0 70%;
 
-    .board-item {
-        flex-basis: 20%;
+    #board {
+        max-width: 800px;
+        width: 100%;
+        overflow: hidden;
 
-        div {
-            position: relative;
-            border: 1px solid black;
-            border-radius: 10px;
-            width: 90%;
-            height: 0;
-            padding-bottom: 90%;
-            cursor: pointer;
-            background-color: @c-background;
+        &.boss-board {
+            margin: 0 auto;
         }
 
-        &.active {
+        .board-item {
+            width: 20%;
+            padding: 0 10px 10px 0;
+            display: inline-block;
+            float: left;
+
             div {
-                .item.active;
+                position: relative;
+                border: 1px solid black;
+                border-radius: 10px;
+                width: 100%;
+                height: 0;
+                padding-bottom: 100%;
+                cursor: pointer;
+                background-color: @c-background;
+            }
+
+            &.active {
+                div {
+                    .item.active;
+                }
+            }
+
+            &.blue {
+                div {
+                    .item.blue;
+                }
+            }
+
+            &.red {
+                div {
+                    .item.red;
+                }
+            }
+
+            &.killer {
+                div {
+                    .item.killer;
+                }
+            }
+
+            &.neutral {
+                div {
+                    background-color: @c-neutral;
+                    cursor: default;
+                }
+            }
+
+            &.found {
+                div {
+                    background-color: @c-background;
+                    color: @c-background-main;
+                    text-decoration: line-through;
+                }
             }
         }
 
-        &.blue {
-            div {
-                .item.blue;
+        span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            text-transform: uppercase;
+            text-align: center;
+            font-weight: bold;
+            width: 100%;
+            display: inline-block;
+            word-wrap: break-word;
+
+            @media @mobile-s {
+                font-size: 0.7em;
             }
         }
-
-        &.red {
-            div {
-                .item.red;
-            }
-        }
-
-        &.killer {
-            div {
-                .item.killer;
-            }
-        }
-
-        &.neutral {
-            div {
-                background-color: @c-neutral;
-                cursor: default;
-            }
-        }
-    }
-
-    span {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%,-50%);
-        text-transform: uppercase;
-        text-align: center;
-        font-weight: bold;
     }
 }
+
+
 
 #boss-board {
     display: flex;
