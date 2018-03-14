@@ -36,11 +36,11 @@ $(document).ready(function() {
 
         var self = this;
 
-        instance.find(".modal-close").off("click").click(function(e){
+        instance.find(".modal-close,a.button.cancel").off("click").click(function(e){
             e.preventDefault();
             self.modalClose();
         });
-        instance.find("a.button").off("click").click(function(e){
+        instance.find("a.button.approve").off("click").click(function(e){
             e.preventDefault();
             $(this).off("click");
             self.modalClose();
