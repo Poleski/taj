@@ -14,20 +14,22 @@ $(document).ready(function() {
     // Parse url parameters. Redirect back to start if no seed is specified.
 
     var url = location.href;
-    var params = url.split("?")[1].split("&");
-    var paramObject = {};
 
-    for (var x in params) {
-        var splitValue = params[x].split("=");
-        var key = splitValue[0];
-        var paramValue = splitValue[1];
+    if (url.split("?")[1]) {
+        var params = url.split("?")[1].split("&");
+        var paramObject = {};
 
-        paramObject[key] = paramValue;
+        for (var x in params) {
+            var splitValue = params[x].split("=");
+            var key = splitValue[0];
+            var paramValue = splitValue[1];
+
+            paramObject[key] = paramValue;
+        }
+
+        var seed = paramObject.seed;
+        var words = paramObject.set;
     }
-
-    var seed = paramObject.seed;
-    var words = paramObject.words;
-
 
     if (!seed) {
         window.location = "start.html";
