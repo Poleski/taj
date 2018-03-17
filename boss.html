@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Tajniacy v0.1</title>
+    <title>Tajniacy v0.2</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/fontawesome.css" rel="stylesheet">
@@ -14,21 +14,19 @@
     <script src="js/vendor/ss.js"></script>
 </head>
 <body class="boss-screen">
+    <header>
+        <label class="checkbox">
+            <input type="checkbox" id="boss-grid-toggle" />
+            <span><i class="fas fa-th"></i></span>
+        </label>
+    </header>
     <section id="content">
-        <!--<section id="scores" class="boss-scores">
-            <div class="scores-red scores">
-                <div class="scores-num"></div>
-            </div>
-            <div class="scores-blue scores">
-                <div class="scores-num"></div>
-            </div>
-        </section>-->
         <section id="boss-board">
             <ul class="word-container word-list red"></ul>
             <ul class="word-container word-list neutral killer"></ul>
             <ul class="word-container word-list blue"></ul>
         </section>
-        <section id="board-container">
+        <section id="board-container" style="display: none;">
             <section id="board" class="boss-board">
                 <div class="board-item" data-item-id="0" data-item-word=""><div><span></span></div></div>
                 <div class="board-item" data-item-id="1" data-item-word=""><div><span></span></div></div>
