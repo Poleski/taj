@@ -348,7 +348,6 @@ body {
                     border-radius: 5px 0 0 5px;
                     border-right: 0;
                 }
-
             }
 
             &:last-child {
@@ -456,18 +455,23 @@ body {
 #board-container {
     flex: 0 0 70%;
 
+    @media @mobile {
+        flex-basis: 100%;
+    }
+
     #board {
         max-width: 800px;
         width: 100%;
         overflow: hidden;
+        padding-top: 10px;
+        padding-left: 10px;
+
+        @media @mobile-s {
+            padding-left: 5px;
+        }
 
         &.boss-board {
             margin: 0 auto;
-            padding-left: 10px;
-
-            @media @mobile-s {
-                padding-left: 5px;
-            }
         }
 
         .board-item {
@@ -559,9 +563,12 @@ body {
         text-align: center;
         margin: 3em 0 0;
 
+        @media @mobile {
+            margin: 0;
+        }
+
         @media @mobile-s {
             flex-basis: 100/2%;
-            margin: 0;
 
             &.neutral {
                 order: 2;

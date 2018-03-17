@@ -13,9 +13,21 @@ $(document).ready(function() {
 
     // Parse url parameters. Redirect back to start if no seed is specified.
 
-    var url = new URL(window.location.href);
-    var seed = url.searchParams.get("seed");
-    var words = url.searchParams.get("set");
+    var url = location.href;
+    var params = url.split("?")[1].split("&");
+    var paramObject = {};
+
+    for (var x in params) {
+        var splitValue = params[x].split("=");
+        var key = splitValue[0];
+        var paramValue = splitValue[1];
+
+        paramObject[key] = paramValue;
+    }
+
+    var seed = paramObject.seed;
+    var words = paramObject.words;
+
 
     if (!seed) {
         window.location = "start.html";
