@@ -131,6 +131,10 @@ $(document).ready(function() {
 
     newGame = function(seed) {
 
+        // Populate header
+
+        $("header h1 span").html(seed);
+
         // Get 25 random words based into an array
 
         var agents = [];
